@@ -6,9 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<meta name="description" content="">
-		<meta name="author" content="Tejas Shah">
+		<meta name="author" content="Cédric LACHAISE">
 		<!--<link rel="icon" href="../../favicon.ico">-->
-		<title>Alexa Utterance Generator</title>
+		<title>LUIS.AI Utterance Generator</title>
 		<!-- Bootstrap core CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -26,7 +26,7 @@
 
 		<!-- Add IntroJs styles -->
 		<link href="css/introjs.min.css" rel="stylesheet">
-		
+
 		<!--'intent-utterance-generator' npm module-->
 		<script src="js/intent-utterance-generator-web.js"></script>
 		<!--clipboard.js-->
@@ -57,8 +57,9 @@
 		<div class="jumbotron">
 			<div class="container">
 				<div class="big-title">
-					<h1>Alexa Utterance Generator</h1>
+					<h1>LUIS.AI Utterance Generator</h1>
 					<h2>A website that allows you to generate numerous utterances with a simplistic GUI.</h2>
+					<p class="lead">Shoutout to <a href="https://github.com/tejashah88">tejashah88</a> for his <a href="https://github.com/tejashah88/Alexa-Utterance-Generator">Alexa-Utterance-Generator</a> Alexa version!</p>
 					<p class="lead">Shoutout to <a href="https://github.com/miguelmota">miguelmota</a> for his <a href="https://github.com/miguelmota/intent-utterance-generator">intent-utterance-generator</a> node module!</p>
 				</div>
 
@@ -67,7 +68,7 @@
 
 					<div class="collapse" id="helpCollapse">
 						<div class="card card-block">
-							<p>The syntax is very similar to the original syntax for making the utterances. You can check it out <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/defining-the-voice-interface#h2_sample_utterances">here</a>. The only difference is that the new syntax makes it easier to create variations of utterances with parenthesis groups.</p>
+							<p>The syntax is very similar to the original syntax for making the utterances. You can check it out <a href="https://dev.projectoxford.ai/docs/services/5890b47c39e2bb17b84a55ff/operations/5890b47c39e2bb052c5b9c09">here</a>. The only difference is that the new syntax makes it easier to create variations of utterances with parenthesis groups.</p>
 							<pre class="code-area">
 Input: "(hello|hi) world"
 Output: "hello world", "hi world"</pre>
@@ -122,7 +123,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 
 		<div class="container">
 			<footer>
-				<p>Created with &hearts; and lots of code by Tejas Shah (<a href="https://github.com/tejashah88">tejashah88</a>)</p>
+				<p>Fork by Cédric Lachaise (<a href="https://github.com/spikeyz">Spikeyz</a>)</p>
 			</footer>
 		</div>
 		<!-- /.container -->
@@ -203,7 +204,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 				var ul = document.getElementById("intentList");
 				var button = document.createElement("button");
 				selectedIntent = document.getElementById('intentName').value;
-				
+
 				if (selectedIntent === "")
 					return;
 
@@ -229,7 +230,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 				ul.appendChild(button);
 			})
 
-			$('#introModal').modal('show');
+			//$('#introModal').modal('show');
 		</script>
 
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
