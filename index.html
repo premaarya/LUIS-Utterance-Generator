@@ -29,12 +29,13 @@
 
 		<!--'intent-utterance-generator' npm module-->
 		<script src="js/intent-utterance-generator-web.js"></script>
+		<script src="js/luis-json-generator.js"></script>
 		<!--clipboard.js-->
 		<script src="js/clipboard.min.js"></script>
 	</head>
 	<!--assets/img/github-banner.png-->
 	<body>
-		<a href="https://github.com/tejashah88/Alexa-Utterance-Generator"><img style="position: absolute; top: 0; left: 0; border: 0;" src="assets/img/github-banner.png" alt="Fork me on GitHub"></a>
+		<a href="https://github.com/spikeyz/LUIS-Utterance-Generator"><img style="position: absolute; top: 0; left: 0; border: 0;" src="assets/img/github-banner.png" alt="Fork me on GitHub"></a>
 
 		<!-- Modal -->
 		<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -60,30 +61,51 @@
 					<h1>LUIS.AI Utterance Generator</h1>
 					<h2>A website that allows you to generate numerous utterances with a simplistic GUI.</h2>
 					<p class="lead">Shoutout to <a href="https://github.com/tejashah88">tejashah88</a> for his <a href="https://github.com/tejashah88/Alexa-Utterance-Generator">Alexa-Utterance-Generator</a> Alexa version!</p>
-					<p class="lead">Shoutout to <a href="https://github.com/miguelmota">miguelmota</a> for his <a href="https://github.com/miguelmota/intent-utterance-generator">intent-utterance-generator</a> node module!</p>
-				</div>
+					</div>
 
 				<div class="instruction-box" data-position="auto" data-step="3" data-intro="You can check out the syntax for generating the utterances here.">
 					<h2 style="text-align: center;">Syntax for utterance generator<button class="btn btn-link btn-lg" type="button" data-toggle="collapse" data-target="#helpCollapse" aria-expanded="false" aria-controls="helpCollapse">Toggle</button></h2>
 
 					<div class="collapse" id="helpCollapse">
 						<div class="card card-block">
+
+							<p>Create first Entities with name surrounded by # like #dogName#=JACK. This value will be replaced during the generation</p>
+							<pre class="code-area">
+Input: "(hello|hi) my dog #dogName#"
+Output: "hello my dog JACK", "hi my dog JACK"</pre>
+
 							<p>The syntax is very similar to the original syntax for making the utterances. You can check it out <a href="https://dev.projectoxford.ai/docs/services/5890b47c39e2bb17b84a55ff/operations/5890b47c39e2bb052c5b9c09">here</a>. The only difference is that the new syntax makes it easier to create variations of utterances with parenthesis groups.</p>
 							<pre class="code-area">
 Input: "(hello|hi) world"
 Output: "hello world", "hi world"</pre>
 
-							<p>You also can specify the parenthesis group to be 'optional', with the '|' symbol.</p>
+							<p>You also can specify the parenthesis group to be 'optional', with the '|' symbol</p>
 							<pre class="code-area">
 Input: "I (love|hate) (|big) dogs"
 Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
-							<p>Note that <code class="code-area-inline">(|big|small)</code> would work the same as <code class="code-area-inline">(big|small)</code>. I'm working a fix at the moment.</p>
 							<p>If you want more examples, the original author of the node module, <a href="https://github.com/miguelmota">miguelmota</a>, has some <a href="https://github.com/miguelmota/intent-utterance-expander#usage">here</a>!</p>
 						</div>
 					</div>
 				</div>
 
 				<div class="container">
+
+					<!--ENTITIES-->
+					<div class="col-xs-4" data-position="auto" data-step="1" >
+						<h3 class="list-group-item text-center">Entities</h3>
+						<br>
+						<div class="input-group">
+							<input id="entityName" type="text" class="form-control input-lg" placeholder="Add Entity..."></input>
+							<span class="input-group-btn">
+								<button id="addEntity" class="btn btn-primary btn-lg" type="button">+</button>
+							</span>
+						</div>
+
+						<ul id="entityList" class="list-group"></ul>
+						</div>
+
+
+					<!--INTENTS-->
 					<div class="col-xs-4" data-position="auto" data-step="1" data-intro="This section allows you to create intents in order to organize your utterances to each intent.">
 						<h3 class="list-group-item text-center">Intents</h3>
 						<br>
@@ -95,18 +117,23 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 						</div>
 
 						<ul id="intentList" class="list-group"></ul>
-						<button id="compileUtterances" class="btn btn-success btn-lg btn-block" type="button" data-position="auto" data-step="4" data-intro="Once you are done, click this button to have your utterances generated. Good luck!">Create Utterances</button>
+						<!--<button id="compileUtterances" class="btn btn-success btn-lg btn-block" type="button" data-position="auto" data-step="4" data-intro="Once you are done, click this button to have your utterances generated. Good luck!">Create Utterances</button>-->
 					</div>
 
-					<div class="col-xs-8" data-position="auto" data-step="2" data-intro="This section is where you enter the script to generate the utterances.">
+
+					<!--UTTERANCES-->
+					<div class="col-xs-4" data-position="auto" data-step="2" data-intro="This section is where you enter the script to generate the utterances.">
 						<div class="input-group">
 							<h3 id="intentTitle" class="list-group-item text-center">Please add an intent</h3>
+
 							<span class="input-group-btn">
 								<h3 id="deleteIntent" class="btn btn-danger btn-lg" type="button">x</h3>
 							</span>
 						</div>
 						<br>
-						<textarea disabled id="codeArea" type="textarea" class="form-control" rows="20"></textarea>
+						<textarea disabled id="codeArea" type="textarea" class="form-control" rows="5"></textarea>
+						<button id="compileUtterances" class="btn btn-success btn-lg btn-block" type="button" data-position="auto" data-step="4" data-intro="Once you are done, click this button to have your utterances generated. Good luck!">Create Utterances</button>
+
 					</div>
 				</div>
 
@@ -139,6 +166,8 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 
 		<script type="text/javascript">
 			var intents = new Map();
+			var entities = new Map();
+
 			var intentButtons;
 			var selectedIntent = "undefined";
 
@@ -169,13 +198,16 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 				}
 
 				var inputData = {};
+
 				intents.forEach((value, key) => {
 					var lines = value.split("\n");
 					inputData[key] = lines;
 				});
 
-				var outputData = intentUtteranceGenerator(inputData).toString();
-				document.getElementById("resultUtterances").innerText = outputData;
+				//LUIS utterances
+				var outputData = luisJSONGenerator(inputData, entities);
+				//console.log(intentUtteranceGenerator(inputData))
+				document.getElementById("resultUtterances").innerText = JSON.stringify(outputData);
 
 				if (intents.size > 0)
 					document.getElementById("finalResults").style.display = 'inline';
@@ -225,6 +257,27 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 					selectedIntent = this.innerText;
 					document.getElementById("intentTitle").innerText = selectedIntent;
 					$("#codeArea").val(intents.get(selectedIntent));
+				});
+
+				ul.appendChild(button);
+			})
+
+			$("#addEntity").on('click', (e) => {
+				var ul = document.getElementById("entityList");
+				var button = document.createElement("button");
+				selectedEntity = document.getElementById('entityName').value;
+				let entity = selectedEntity.split('=');
+
+				entities.set(entity[0].trim(), entity[1].trim());
+
+				document.getElementById('entityName').value = "";
+
+				button.appendChild(document.createTextNode(selectedEntity));
+				button.setAttribute("id", "entity" + selectedEntity);
+				button.setAttribute("class", "list-group-item");
+				button.addEventListener("click", function() {
+					selectedEntity = this.innerText;
+					document.getElementById("entityTitle").innerText = selectedEntity;
 				});
 
 				ul.appendChild(button);
