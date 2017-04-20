@@ -140,7 +140,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 				<div id="finalResults" class="container" style="display:none">
 					<h2 class="list-group-item text-center">Final Results</h2>
 					<div class="container" style="padding:15px">
-						<code id="resultUtterances" class="code-area"></code>
+						<pre id="resultUtterances" class="code-area"></pre>
 					</div>
 					<button id="copyUtterances" class="btn btn-info btn-lg btn-block" data-clipboard-target="#resultUtterances" type="button">Copy!</button>
 				</div>
@@ -207,7 +207,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 				//LUIS utterances
 				var outputData = luisJSONGenerator(inputData, entities);
 				//console.log(intentUtteranceGenerator(inputData))
-				document.getElementById("resultUtterances").innerText = JSON.stringify(outputData);
+				document.getElementById("resultUtterances").innerText = JSON.stringify(outputData, undefined, 4);
 
 				if (intents.size > 0)
 					document.getElementById("finalResults").style.display = 'inline';
