@@ -63,7 +63,7 @@
 					<p class="lead">Shoutout to <a href="https://github.com/tejashah88">tejashah88</a> for his <a href="https://github.com/tejashah88/Alexa-Utterance-Generator">Alexa-Utterance-Generator</a> Alexa version!</p>
 					</div>
 
-				<div class="instruction-box" data-position="auto" data-step="5" data-intro="You can check out the syntax for generating the utterances here.">
+				<div class="instruction-box" data-position="auto" data-step="1" data-intro="You can check out the syntax for generating the utterances here.">
 					<h2 style="text-align: center;">Syntax for utterance generator<button class="btn btn-link btn-lg" type="button" data-toggle="collapse" data-target="#helpCollapse" aria-expanded="false" aria-controls="helpCollapse">Toggle</button></h2>
 
 					<div class="collapse" id="helpCollapse">
@@ -88,10 +88,23 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 					</div>
 				</div>
 
-				<div class="container">
+				<div class="container" style="margin-top:20px">
+					<div class="row">
+						<div class="col-xs-4" id="apiVersion" data-step="2" data-intro="Select API version" style="margin-left:20px" >
+							<span class="lead" style="vertical-align:bottom">Microsoft LUIS API version :</span>
+							<div class="btn-group" data-toggle="buttons">
+							  <label class="btn btn-primary">
+							    <input type="radio" name="options" value="1" autocomplete="off"> v1
+							  </label>
+							  <label class="btn btn-primary active">
+							    <input type="radio" name="options" value="2" autocomplete="off" checked> v2
+							  </label>
+							</div>
+						</div>
+					</div>
 
 					<!--ENTITIES-->
-					<div class="col-xs-4" data-position="auto" data-step="1" data-intro="This section allows you to create entities for all intents" >
+					<div class="col-xs-4" data-position="auto" data-step="3" data-intro="This section allows you to create entities for all intents" >
 						<h3 class="list-group-item text-center">Entities</h3>
 						<br>
 						<div class="input-group">
@@ -106,7 +119,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 
 
 					<!--INTENTS-->
-					<div class="col-xs-4" data-position="auto" data-step="2" data-intro="This section allows you to create intents in order to organize your utterances to each intent.">
+					<div class="col-xs-4" data-position="auto" data-step="4" data-intro="This section allows you to create intents in order to organize your utterances to each intent.">
 						<h3 class="list-group-item text-center">Intents</h3>
 						<br>
 						<div class="input-group">
@@ -122,7 +135,7 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 
 
 					<!--UTTERANCES-->
-					<div class="col-xs-4" data-position="auto" data-step="3" data-intro="This section is where you enter the script to generate the utterances.">
+					<div class="col-xs-4" data-position="auto" data-step="5" data-intro="This section is where you enter the script to generate the utterances.">
 						<div class="input-group">
 							<h3 id="intentTitle" class="list-group-item text-center">Please add an intent</h3>
 
@@ -131,8 +144,8 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 							</span>
 						</div>
 						<br>
-						<textarea disabled id="codeArea" type="textarea" class="form-control" rows="5"></textarea>
-						<button id="compileUtterances" class="btn btn-success btn-lg btn-block" type="button" data-position="auto" data-step="4" data-intro="Once you are done, click this button to have your utterances generated. Good luck!">Create Utterances</button>
+						<textarea disabled id="codeArea" type="textarea" class="form-control" rows="5"></textarea><br/>
+						<button id="compileUtterances" class="btn btn-success btn-lg btn-block" type="button" data-position="auto" data-step="6" data-intro="Once you are done, click this button to have your utterances generated. Good luck!">Create Utterances</button>
 
 					</div>
 				</div>
@@ -205,8 +218,8 @@ Output: "I love big dogs", "I love dogs", "I hate big dogs", "I hate dogs"</pre>
 				});
 
 				//LUIS utterances
-				var outputData = luisJSONGenerator(inputData, entities);
-				//console.log(intentUtteranceGenerator(inputData))
+				var version = $('#apiVersion input:radio:checked').val();
+				var outputData = luisJSONGenerator(inputData, entities, version);
 				document.getElementById("resultUtterances").innerText = JSON.stringify(outputData, undefined, 4);
 
 				if (intents.size > 0)
