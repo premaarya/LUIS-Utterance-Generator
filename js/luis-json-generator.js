@@ -27,27 +27,28 @@ function luisJSONGenerator(inputData, entities, version)
 
       entities.forEach((value, key) => {
         newLine = newLine.replace(key.toString(), value.toString());
+      })
 
-        if(utt.indexOf(key) > -1){
+      entities.forEach((value, key) => {
+
+        if(newLine.indexOf(value) > -1){
           entityLabel = {};
 
           switch(version){
             case "1" :
               entityLabel["entity"] = key.toString().substring(1, key.toString().length - 1);
-              entityLabel["startPos"] = utt.indexOf(key.toString());
-              entityLabel["endPos"] = entityLabel["startPos"] + value.length - 1;
+              entityLabel["startPos"] = newLine.indexOf(value.toString());
+              entityLabel["endPos"] = entityLabel["startPos"] + value.toString().length - 1;
             break;
             case "2" :
             entityLabel["entityName"] = key.toString().substring(1, key.toString().length - 1);
-            entityLabel["startCharIndex"] = utt.indexOf(key.toString());
-            entityLabel["endCharIndex"] = entityLabel["startCharIndex"] + value.length - 1;
+            entityLabel["startCharIndex"] = newLine.indexOf(value.toString());
+            entityLabel["endCharIndex"] = entityLabel["startCharIndex"] + value.toString().length - 1;
             break;
           }
           entityLabels.push(entityLabel);
         }
       })
-
-      console.log(entityLabels)
 
       switch(version){
         case "1" :
@@ -61,6 +62,7 @@ function luisJSONGenerator(inputData, entities, version)
       }
 
       block["text"] = newLine;
+      console.log(newLine)
 
       if(newLine != "")
         LUISBody.push(block);
