@@ -34,18 +34,20 @@ function luisJSONGenerator(inputData, entities, version)
           switch(version){
             case "1" :
               entityLabel["entity"] = key.toString().substring(1, key.toString().length - 1);
-              entityLabel["startPos"] = utt.indexOf(key);
+              entityLabel["startPos"] = utt.indexOf(key.toString());
               entityLabel["endPos"] = entityLabel["startPos"] + value.length - 1;
             break;
             case "2" :
             entityLabel["entityName"] = key.toString().substring(1, key.toString().length - 1);
-            entityLabel["startCharIndex"] = utt.indexOf(key);
+            entityLabel["startCharIndex"] = utt.indexOf(key.toString());
             entityLabel["endCharIndex"] = entityLabel["startCharIndex"] + value.length - 1;
             break;
           }
           entityLabels.push(entityLabel);
         }
       })
+
+      console.log(entityLabels)
 
       switch(version){
         case "1" :
